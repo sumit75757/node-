@@ -19,7 +19,7 @@ res=>{
 }
 ).catch(
     err =>{
-        console.log("database not conected");
+        console.log("database not conected",err);
     }
 )
 app.use(morgen('dev'))
