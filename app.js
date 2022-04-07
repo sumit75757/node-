@@ -26,9 +26,9 @@ app.use(morgen('dev'))
 app.use('/uplode',express.static('uplode'))
 // app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json())
-// app.use(cors({
-//     origin:"*"
-// }))
+app.use(cors({
+    origin:"*"
+}))
 app.all('*', function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "X-Requested-With");
