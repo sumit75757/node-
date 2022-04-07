@@ -11,7 +11,7 @@ const email = require("./api/routes/send_email");
 const cors = require("cors");
 
 
-mongoos.connect('mongodb://127.0.0.1:27017')
+mongoos.connect('mongodb+srv://sumit001:sumit@97249@database.sc5fc.mongodb.net/myFirstDatabase?retryWrites=true&w=majority')
 .then(
 res=>{
     console.log('database conected');
