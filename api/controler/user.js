@@ -46,10 +46,9 @@ exports.postUser = uplode.single('userImage') , (req, res) => {
   }
 
 exports.getUser = (req, res) => {
-  console.log(req.query.userName);
-  const id = req.query.userName;
-  if(id != null || id !== ""){
-   
+  console.log(req.query.username);
+  const id = req.query.username;
+  if(id != null && id !== ""&&id != undefined){
     usermodels.find({userName: id}).exec().then(result => {
       if (result) {
         res.status(200).json(result)
