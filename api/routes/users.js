@@ -36,14 +36,14 @@ route.get('/', getUser.getUser);
 ////////////////////////post User ////////////////////////////////////
 // uplode.single('userImage'),
 route.post('/', uplode.single('userImage'), (req, res) => {
-    console.log(req.file);
+    console.log(req);
     const user = new usermodels({
         _id: new mongoos.Types.ObjectId(),
         userName: req.body.userName,
         phone: req.body.phone,
         email: req.body.email,
         gender: req.body.gender,
-        userImage: '/uplode/' + req.body.filename,
+        userImage: '/uplode/' + req.file.filename,
         date: Date(Date.now()),
         data:req.body.data
     });
