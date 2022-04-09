@@ -60,7 +60,7 @@ route.post('/', uplode.single('userImage'), (req, res) => {
 
 });
 ////////////////////////get User by id ////////////////////////////////////
-// route.get('/:userId', authchak, getUser.getuserById);
+route.get('/:userId', authchak, getUser.getuserById);
 ////////////////////////PUt(update) User ////////////////////////////////////
 route.put('/:userId', authchak, getUser.updateUser);
 ////////////////////////remove   User ////////////////////////////////////
