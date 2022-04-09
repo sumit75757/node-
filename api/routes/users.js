@@ -45,7 +45,7 @@ route.post('/', uplode.single('userImage'), (req, res) => {
         phone: req.body.phone,
         email: req.body.email,
         gender: req.body.gender,
-        userImage: '/uplode/' + req.file.filename,
+        userImage: '/uplode/' + req.file.name,
         date: Date(Date.now()),
         data: data 
     });
