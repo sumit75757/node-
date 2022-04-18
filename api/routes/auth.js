@@ -49,7 +49,7 @@ route.post('/singup', (req, res, next) => {
                                             // userId: data._id
                                         },
                                         'fasfguh9h$%@EWRGW$^YQ#Q#$TGv0', {
-                                            expiresIn: "1h"
+                                            expiresIn: "7d"
                                         }
                                     )
                                     const resData = {
@@ -114,7 +114,7 @@ route.post('/singin', (req, res, next) => {
                             userId: result[0]._id
                         },
                         'fasfguh9h$%@EWRGW$^YQ#Q#$TGv0', {
-                            expiresIn: "1h"
+                            expiresIn: "7d"
                         }
                     )
                     result.forEach(element => {

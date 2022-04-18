@@ -8,14 +8,21 @@ const user = require("./api/routes/users");
 const auth = require("./api/routes/auth");
 const todos =require('./api/routes/todo')
 const email = require("./api/routes/send_email");
+const feed = require("./api/routes/post");
 const cors = require("cors");
+const jwt = require('jsonwebtoken')
+const authchack = require("./api/Middleware/chack-auth")
+require("dotenv").config();
 
 
-mongoos.connect('mongodb+srv://sumit:sumit97249@cluster3.renjo.mongodb.net/myFirstDatabase?retryWrites=true&w=majority')
+const { PORT, MONGODB_URI, NODE_ENV,ORIGIN,JWT_SECRET } = require("./config");
+// const { API_ENDPOINT_NOT_FOUND_ERR, SERVER_ERR } = require("./errors");
+
+mongoos.connect(MONGODB_URI)
 .then(
 res=>{
     console.log('database conected');
-    console.log("http://localhost:3000/");
+    console.log("http://localhost:"+PORT+"/");
 }
 ).catch(
     err =>{
@@ -23,7 +30,8 @@ res=>{
     }
 )
 app.use(morgen('dev'))
-app.use('/uplode',express.static('uplode'))
+
+
 // app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json())
 app.use(cors({
@@ -52,12 +60,33 @@ app.all('*', function(req, res, next) {
 //     next();
 // }
 // )
+/////////////routes////////////////
+// app.use('/api', jwt({
+//     secret: config.sessionSecretKey,
+//     fail: function (req, res) {
+//       if (!req.headers.authorization){
+//         res.send(401, 'missing authorization header');
+//       }
+//       res.send(401);
+//     }
+//   }));
 app.use('/auth', auth)
 app.use('/email', email)
 app.use('/api/products', produst);
 app.use('/api/user', user);
 app.use('/api/todo', todos);
-;
+app.use('/api/feed', feed);
+app.use('/uplode',express.static('uplode'));
+app.use('/feeds',express.static('feeds'));
+
+
+app.use( authchack, (res,req,next)=>{
+    
+    const err = new Error('404 Not Found');
+    err.status = 404;
+    next(err);
+})
+
 app.use((res,req,next)=>{
     const err = new Error('404 Not Found');
     err.status = 404;

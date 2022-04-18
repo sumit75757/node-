@@ -18,11 +18,16 @@ const fileFilter =  (req,file,cb)=>{
     cb(null,false);
   }
 }
+
 const uplode = multer({storage:storage,limits:{
   fieldSize:1024 * 1024 *   5
 },
   fileFilter:fileFilter
 });
+const fs = require('fs')
+const { promisify } = require('util')
+
+const unlinkAsync = promisify(fs.unlink)
 
 exports.postUser = uplode.single('userImage') , (req, res) => {
     console.log(req.file);
@@ -117,7 +122,7 @@ exports.getUser = (req, res) => {
     });
   }
   exports.updateUser = (req, res) => {
-    console.log(req.file.filename);
+    console.log("adasd",req.body);
     const id = req.params.userId;
     const data = {
       userName: req.body.userName,
@@ -132,6 +137,8 @@ exports.getUser = (req, res) => {
     }, {
       $set: data
     }).exec().then(result => {
+    console.log("fadfas",data);
+
       if (result) {
         res.status(200).json(result)
         console.log(result)
@@ -146,22 +153,32 @@ exports.getUser = (req, res) => {
       res.status(500).json(err.errors)
     });
   }
-  
+  let userImages = false
   exports.deletuser = (req, res) => {
     const id = req.params.userId;
+    let path ;
     usermodels.remove({
       _id: id
     }).exec().then(result => {
       res.status(200).json(result)
       console.log(result)
+      userImages=true
     }).catch(err => {
       res.status(500).json(err.errors)
     });
+    if (userImages == true) {
+      usermodels.findById(id).exec().then(res=>{
+        path = res.userImage
+        try{
+          unlinkAsync("."+res.userImage)
+        }catch(err){
+          console.log(err);
+        }
+      })
+    }
   };
 
 
 
 
-  exports.getuesername = (req, res) => {
-    
-  }
+ 
