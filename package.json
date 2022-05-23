@@ -4,7 +4,7 @@
   "description": "first node API",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon server.js",
+    "start": "npm server.js",
     "watch": " webpack --mode development ",
     "build": " webpack --mode production "
   },
